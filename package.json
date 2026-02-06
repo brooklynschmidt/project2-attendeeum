@@ -1,0 +1,36 @@
+{
+  "name": "project2-attendeeum",
+  "version": "1.0.0",
+  "description": "filler content",
+  "main": "backend.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./node_modules/nodemon/bin/nodemon.js backend.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brooklynschmidt/project2-attendeeum.git"
+  },
+  "keywords": [],
+  "author": "Brooklyn Schmidt & Isabel Yeow",
+  "license": "MIT",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/brooklynschmidt/project2-attendeeum/issues"
+  },
+  "homepage": "https://github.com/brooklynschmidt/project2-attendeeum#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "nodemon": "^3.1.11"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jest": "^29.12.2",
+    "eslint-plugin-prettier": "^5.5.5",
+    "globals": "^17.3.0",
+    "jest": "^30.2.0",
+    "prettier": "^3.8.1"
+  }
+}
