@@ -1,0 +1,100 @@
+/* login and sign up page *//* ================================
+   
+
+
+Auth Pages Styles (Login & Signup)
+   ================================ */
+
+/* ================================
+   Auth Container
+   ================================ */
+.auth-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  padding-bottom: 70px;
+}
+
+.auth-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* ================================
+   Auth Form
+   ================================ */
+.auth-form {
+  width: 100%;
+  max-width: 360px;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #333;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* ================================
+   Auth Switch Link
+   ================================ */
+.auth-switch {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #555;
+  text-align: center;
+}
+
+.auth-switch a {
+  color: #333;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
+/* ================================
+   Responsive
+   ================================ */
+@media (max-width: 480px) {
+  .auth-title {
+    font-size: 2rem;
+  }
+
+  .auth-form {
+    max-width: 100%;
+  }
+}
