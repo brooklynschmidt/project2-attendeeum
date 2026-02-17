@@ -23,7 +23,8 @@ const handleLogin = async (event) => {
   //   body: JSON.stringify({ email, password })
   // });
 
-  alert("Login functionality coming soon!");
+  // Temporary redirect to dashboard
+  window.location.href = "dashboard.html";
 };
 
 /**

@@ -41,7 +41,8 @@ const handleSignup = async (event) => {
   //   body: JSON.stringify({ name, email, password })
   // });
 
-  alert("Sign up functionality coming soon!");
+  // Temporary redirect to dashboard
+  window.location.href = "dashboard.html";
 };
 
 /**

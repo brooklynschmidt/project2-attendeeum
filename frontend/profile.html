@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile - Attendeeum</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/profile.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <a href="dashboard.html" class="back-btn" aria-label="Back to dashboard">
+        <span class="back-arrow">←</span>
+      </a>
+      <button type="button" class="btn btn-danger" id="sign-out-btn">Sign Out</button>
+    </nav>
+
+    <main class="profile-page">
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-photo">
+          <div class="photo-placeholder"></div>
+        </div>
+        <div class="profile-info">
+          <h1 class="profile-display-name">John Doe</h1>
+          <p class="profile-email-display">johndoe@gmail.com</p>
+        </div>
+      </div>
+
+      <!-- Profile Fields -->
+      <div class="profile-fields">
+        <div class="field-group">
+          <label for="profile-name">Profile Name</label>
+          <input 
+            type="text" 
+            id="profile-name" 
+            name="profile-name" 
+            value="John Doe"
+            disabled
+          />
+        </div>
+        <div class="field-group">
+          <label for="username">User Name</label>
+          <input 
+            type="text" 
+            id="username" 
+            name="username" 
+            value="@John"
+            disabled
+          />
+        </div>
+        <div class="field-group">
+          <label for="email">Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            value="johndoe@gmail.com"
+            disabled
+          />
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="js/profile.js"></script>
+  </body>
+</html>
