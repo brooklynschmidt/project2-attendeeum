@@ -1,0 +1,149 @@
+/* ================================
+   Product Page Styles
+   ================================ */
+
+/* ================================
+   Section 1: Product Hero
+   ================================ */
+.product-hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 120px 2rem 2rem;
+}
+
+.product-title {
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.product-intro {
+  display: flex;
+  align-items: flex-start;
+  gap: 4rem;
+  max-width: 1000px;
+  width: 100%;
+  margin: auto;
+}
+
+.product-name {
+  font-size: 2rem;
+  font-weight: 600;
+  min-width: 200px;
+}
+
+.product-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+  max-width: 600px;
+}
+
+/* ================================
+   Feature Sections
+   ================================ */
+.feature-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  padding: 6rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Alternate layout: text left, demo right */
+.feature-section-alt {
+  flex-direction: row-reverse;
+}
+
+.feature-demo {
+  flex: 1;
+  max-width: 500px;
+}
+
+.demo-placeholder {
+  width: 100%;
+  height: 300px;
+  background-color: #f0f0f0;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.demo-placeholder span {
+  font-size: 1.25rem;
+  color: #999;
+  font-weight: 500;
+}
+
+.feature-content {
+  flex: 1;
+  max-width: 400px;
+}
+
+.feature-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.feature-description {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #555;
+}
+
+/* ================================
+   Fade-in Animation
+   ================================ */
+.fade-in {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================================
+   Responsive
+   ================================ */
+@media (max-width: 768px) {
+  .product-title {
+    font-size: 2rem;
+  }
+
+  .product-intro {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .product-name {
+    min-width: auto;
+  }
+
+  .feature-section,
+  .feature-section-alt {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+    padding: 4rem 1.5rem;
+  }
+
+  .feature-content {
+    max-width: 100%;
+  }
+
+  .demo-placeholder {
+    height: 220px;
+  }
+}
