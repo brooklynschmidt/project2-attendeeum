@@ -155,10 +155,11 @@ const openViewEventModal = (event) => {
   document.getElementById("view-event-location").textContent = event.location;
   document.getElementById("view-event-description").textContent = event.description;
   document.getElementById("view-event-category").textContent = event.category;
+  document.getElementById("view-event-people").textContent = event.attending;
 
   const deleteBtn = document.getElementById("delete-event-btn");
   if (currentUser && currentUser.email === event.createdBy) {
-    deleteBtn.classList.remove("hidden");
+    document.getElementById("delete-event-btn").style.display = 'block';
     deleteBtn.onclick = async () => {
       await deleteEvent(event._id);
       await fetchEvents();
@@ -167,7 +168,8 @@ const openViewEventModal = (event) => {
 
     };
   } else {
-    deleteBtn.classList.add("hidden");
+    document.getElementById("delete-event-btn").style.display = 'none';
+    deleteBtn.onclick = null;
   }
 
   modal.classList.remove("hidden");
