@@ -8,7 +8,7 @@
         "description": "Come join us to learn about Korean culture! Link in our instagram bio: @neukasa",
         "createdBy": "alice@gmail.com",
         "category": "social",
-        "attending": []
+        "attending": ["Bob"]
     },
     {
         "title": "NUHacks",
