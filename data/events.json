@@ -7,7 +7,8 @@
         "date": "2026-02-28",
         "description": "Come join us to learn about Korean culture! Link in our instagram bio: @neukasa",
         "createdBy": "alice@gmail.com",
-        "category": "social"
+        "category": "social",
+        "attending": []
     },
     {
         "title": "NUHacks",
@@ -17,6 +18,7 @@
         "date": "2026-02-02",
         "description": "Best CTF to ever exist. Come by.",
         "createdBy": "bob@gmail.com",
-        "category": "academic"
+        "category": "academic",
+        "attending": []
     }
 ]

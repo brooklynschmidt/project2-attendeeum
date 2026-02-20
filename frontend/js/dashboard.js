@@ -264,7 +264,8 @@ const init = async () => {
         date: form["date"].value,
         description: form["description"].value,
         createdBy: currentUser.email,
-        category: form["category"].value
+        category: form["category"].value,
+        attending: []
       };
 
       try {
