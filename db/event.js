@@ -2,8 +2,7 @@ import { MongoClient, ObjectId } from "mongodb";
 
 export default function myMongoDB() {
     const me = {};
-    const URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
-    const DB_NAME = "registrationdb";
+    const URI = process.env.MONGODB_URI || "mongodb://admin:devpass123@localhost:27017/?authSource=admin";    const DB_NAME = "registrationdb";
 
     const connect = async () => {
         const client = new MongoClient(URI);
@@ -46,6 +45,32 @@ export default function myMongoDB() {
             await client.close();
         }
     };
+
+      me.rsvpEvent = async (eventId, email, name, status) => {
+        const { client, events } = await connect();
+        try {
+            await events.updateOne(
+                { _id: new ObjectId(eventId) },
+                { $pull: { attending: { email } } }
+            );
+
+            if (status === "not_going") {
+                const updated = await events.findOne({ _id: new ObjectId(eventId) });
+                return { success: true, attending: updated.attending };
+            }
+
+            await events.updateOne(
+                { _id: new ObjectId(eventId) },
+                { $push: { attending: { email, name, status } } }
+            );
+
+            const updated = await events.findOne({ _id: new ObjectId(eventId) });
+            return { success: true, attending: updated.attending };
+        } finally {
+            await client.close();
+        }
+    };
+
 
     return me;
 }

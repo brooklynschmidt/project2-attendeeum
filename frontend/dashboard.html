@@ -32,7 +32,13 @@
       </div>
       <div class="calendar-actions">
         <button type="button" class="btn btn-primary">+ New Event</button>
-        <button type="button" class="btn btn-outline">Filter</button>
+
+        <!-- Filter Dropdown -->
+        <div class="filter-wrapper">
+          <select id="category-filter" class="filter-select">
+            <option value="all">Filter</option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -112,6 +118,7 @@
 
   <!-- View Event Modal -->
   <div class="modal hidden" id="view-event-modal">
+    <div class="modal-overlay" id="view-modal-overlay"></div>
     <div class="modal-content">
       <h2 id="view-event-title">Event Name</h2>
       <p><strong>Organization:</strong> <span id="view-event-organization"></span></p>
@@ -121,8 +128,22 @@
       <p><strong>Description:</strong></p>
       <p id="view-event-description"></p>
       <p><strong>Category:</strong> <span id="view-event-category"></span></p>
-      <p><strong>People Attending:</strong> <span id="view-event-people"></span></p>
 
+      <!-- RSVP Section -->
+      <div class="rsvp-section">
+        <h3 class="rsvp-heading">RSVP</h3>
+        <div class="rsvp-buttons" id="rsvp-buttons">
+          <button type="button" class="rsvp-btn" data-status="going">Going</button>
+          <button type="button" class="rsvp-btn" data-status="maybe">Maybe</button>
+          <button type="button" class="rsvp-btn" data-status="not_going">Not Going</button>
+        </div>
+
+        <!-- Attendee Counts -->
+        <div class="rsvp-counts" id="rsvp-counts"></div>
+
+        <!-- Attendee Lists -->
+        <div class="attendee-lists" id="attendee-lists"></div>
+      </div>
 
       <div class="modal-buttons">
         <button type="button" class="btn btn-outline" id="close-view-modal">Close</button>

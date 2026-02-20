@@ -413,4 +413,158 @@ textarea {
     min-height: 50px;
   }
 }
+/* ================================
+   Filter Dropdown
+   ================================ */
+.filter-wrapper {
+  position: relative;
+}
 
+.filter-select {
+  padding: 0.6rem 2rem 0.6rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 2px solid #4f46e5;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #4f46e5;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234f46e5' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.filter-select:hover {
+  background-color: #4f46e5;
+  color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+}
+
+.filter-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+/* ================================
+   RSVP Section
+   ================================ */
+.rsvp-section {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.rsvp-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3c4043;
+  margin: 0 0 0.75rem 0;
+}
+
+.rsvp-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.rsvp-btn {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 2px solid #dadce0;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #5f6368;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rsvp-btn:hover {
+  border-color: #4f46e5;
+  color: #4f46e5;
+}
+
+/* Active states for each RSVP status */
+.rsvp-btn.active-going {
+  background-color: #16a34a;
+  border-color: #16a34a;
+  color: #fff;
+}
+
+.rsvp-btn.active-maybe {
+  background-color: #f59e0b;
+  border-color: #f59e0b;
+  color: #fff;
+}
+
+.rsvp-btn.active-not-going {
+  background-color: #6b7280;
+  border-color: #6b7280;
+  color: #fff;
+}
+
+/* ================================
+   RSVP Counts & Attendee Lists
+   ================================ */
+.rsvp-counts {
+  font-size: 0.85rem;
+  color: #5f6368;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.attendee-lists {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.attendee-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.attendee-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.going-label {
+  color: #16a34a;
+}
+
+.maybe-label {
+  color: #f59e0b;
+}
+
+.attendee-names {
+  font-size: 0.85rem;
+  color: #3c4043;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ================================
+   Danger Button (Delete)
+   ================================ */
+.btn-danger {
+  background-color: #dc2626;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-danger:hover {
+  background-color: #b91c1c;
+}

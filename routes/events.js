@@ -49,4 +49,27 @@ router.delete("/:id", async (req, res) => {
         res.status(500).json({ message: "Failed to delete event" });
     }
 });
+
+router.put("/:id/rsvp", async (req, res) => {
+    const { id } = req.params;
+    const { email, name, status } = req.body;
+
+    if (!email || !status) {
+        return res.status(400).json({ message: "Email and status are required" });
+    }
+
+    const validStatuses = ["going", "maybe", "not_going"];
+    if (!validStatuses.includes(status)) {
+        return res.status(400).json({ message: "Invalid RSVP status" });
+    }
+
+    try {
+        const result = await db.rsvpEvent(id, email, name || "Anonymous", status);
+        res.json(result);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Failed to RSVP" });
+    }
+});
+
 export default router;

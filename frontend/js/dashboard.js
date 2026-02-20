@@ -18,9 +18,10 @@ const monthNames = [
 ];
 
 /**
- * Global events array
+ * Global events array and filter state
  */
 let events = [];
+let activeFilter = "all";
 
 /**
  * Get the number of days in a month
@@ -30,7 +31,7 @@ const getDaysInMonth = (year, month) => {
 };
 
 /**
- * Get the day of week the month starts on (0 = Sunday, 1 = Monday, etc.)
+ * Get the day of week the month starts on
  * Adjusted for Monday start (0 = Monday, 6 = Sunday)
  */
 const getFirstDayOfMonth = (year, month) => {
@@ -38,9 +39,12 @@ const getFirstDayOfMonth = (year, month) => {
   return day === 0 ? 6 : day - 1;
 };
 
+/**
+ * Fetch all events from the API
+ */
 const fetchEvents = async () => {
   try {
-    const res = await fetch("/api/events");  // <-- no email filter
+    const res = await fetch("/api/events");
     if (res.ok) {
       events = await res.json();
     } else {
@@ -50,6 +54,47 @@ const fetchEvents = async () => {
   } catch (err) {
     console.error("Error fetching events:", err);
     events = [];
+  }
+};
+
+/**
+ * Get filtered events based on the active category filter
+ */
+const getFilteredEvents = () => {
+  if (activeFilter === "all") return events;
+  return events.filter(ev => ev.category === activeFilter);
+};
+
+/**
+ * Populate the category filter dropdown with unique categories
+ */
+const populateCategoryFilter = () => {
+  const filterSelect = document.getElementById("category-filter");
+  if (!filterSelect) return;
+
+  // Collect unique categories
+  const categories = [...new Set(
+    events
+      .map(ev => ev.category)
+      .filter(cat => cat && cat.trim() !== "")
+  )].sort();
+
+  // Keep "All Categories" and rebuild options
+  filterSelect.innerHTML = '<option value="all">All Categories</option>';
+
+  categories.forEach(cat => {
+    const option = document.createElement("option");
+    option.value = cat;
+    option.textContent = cat;
+    filterSelect.appendChild(option);
+  });
+
+  // Restore previous selection if it still exists
+  if (categories.includes(activeFilter)) {
+    filterSelect.value = activeFilter;
+  } else {
+    activeFilter = "all";
+    filterSelect.value = "all";
   }
 };
 
@@ -74,6 +119,7 @@ const generateCalendar = () => {
   const todayDate = today.getDate();
 
   const totalCells = 35;
+  const filteredEvents = getFilteredEvents();
 
   for (let i = 0; i < totalCells; i++) {
     const dayElement = document.createElement("div");
@@ -105,10 +151,10 @@ const generateCalendar = () => {
         handleDayClick(date);
       });
 
-      // Render events for this day
+      // Render filtered events for this day
       const dayISO = new Date(currentYear, currentMonth, date).toISOString().split("T")[0];
 
-      events
+      filteredEvents
         .filter(ev => ev.date === dayISO)
         .forEach(ev => {
           const evEl = document.createElement("div");
@@ -118,7 +164,7 @@ const generateCalendar = () => {
           if (currentUser && currentUser.email === ev.createdBy) {
             evEl.classList.add("my-event");
           }
-          
+
           evEl.textContent = ev.title;
           evEl.addEventListener("click", (e) => {
             e.stopPropagation();
@@ -150,6 +196,108 @@ const handleDayClick = (date) => {
   modal.classList.remove("hidden");
 };
 
+// ================================
+// RSVP Functions
+// ================================
+
+/**
+ * Send RSVP to the server
+ */
+const sendRSVP = async (eventId, status) => {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    alert("You must be logged in to RSVP.");
+    return null;
+  }
+
+  try {
+    const res = await fetch(`/api/events/${eventId}/rsvp`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: currentUser.email,
+        name: currentUser.name || "Anonymous",
+        status
+      })
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      return data.attending;
+    } else {
+      console.error("Failed to RSVP");
+      return null;
+    }
+  } catch (err) {
+    console.error("Error sending RSVP:", err);
+    return null;
+  }
+};
+
+/**
+ * Render the RSVP UI inside the view modal
+ */
+const renderRSVP = (event) => {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const attending = event.attending || [];
+
+  // Find current user's RSVP status
+  const myRSVP = currentUser
+    ? attending.find(a => a.email === currentUser.email)
+    : null;
+  const myStatus = myRSVP ? myRSVP.status : null;
+
+  // Highlight active RSVP button
+  const rsvpButtons = document.querySelectorAll(".rsvp-btn");
+  rsvpButtons.forEach(btn => {
+    btn.classList.remove("active-going", "active-maybe", "active-not-going");
+    const btnStatus = btn.dataset.status;
+    if (btnStatus === myStatus) {
+      btn.classList.add(`active-${btnStatus.replace("_", "-")}`);
+    }
+  });
+
+  // Count attendees by status
+  const goingList = attending.filter(a => a.status === "going");
+  const maybeList = attending.filter(a => a.status === "maybe");
+
+  // Render counts
+  const countsEl = document.getElementById("rsvp-counts");
+  const parts = [];
+  if (goingList.length > 0) parts.push(`${goingList.length} Going`);
+  if (maybeList.length > 0) parts.push(`${maybeList.length} Maybe`);
+  countsEl.textContent = parts.length > 0 ? parts.join(" · ") : "No RSVPs yet";
+
+  // Render attendee name lists
+  const listsEl = document.getElementById("attendee-lists");
+  listsEl.innerHTML = "";
+
+  if (goingList.length > 0) {
+    const goingSection = document.createElement("div");
+    goingSection.classList.add("attendee-group");
+    goingSection.innerHTML = `<span class="attendee-label going-label">Going</span>`;
+    const names = document.createElement("p");
+    names.classList.add("attendee-names");
+    names.textContent = goingList.map(a => a.name).join(", ");
+    goingSection.appendChild(names);
+    listsEl.appendChild(goingSection);
+  }
+
+  if (maybeList.length > 0) {
+    const maybeSection = document.createElement("div");
+    maybeSection.classList.add("attendee-group");
+    maybeSection.innerHTML = `<span class="attendee-label maybe-label">Maybe</span>`;
+    const names = document.createElement("p");
+    names.classList.add("attendee-names");
+    names.textContent = maybeList.map(a => a.name).join(", ");
+    maybeSection.appendChild(names);
+    listsEl.appendChild(maybeSection);
+  }
+};
+
+/**
+ * Open the view event modal with RSVP functionality
+ */
 const openViewEventModal = (event) => {
   const modal = document.getElementById("view-event-modal");
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -161,26 +309,57 @@ const openViewEventModal = (event) => {
   document.getElementById("view-event-location").textContent = event.location;
   document.getElementById("view-event-description").textContent = event.description;
   document.getElementById("view-event-category").textContent = event.category;
-  document.getElementById("view-event-people").textContent = event.attending;
 
+  // Render RSVP section
+  renderRSVP(event);
+
+  // Wire up RSVP buttons
+  const rsvpButtons = document.querySelectorAll(".rsvp-btn");
+  rsvpButtons.forEach(btn => {
+    // Clone and replace to remove old listeners
+    const newBtn = btn.cloneNode(true);
+    btn.parentNode.replaceChild(newBtn, btn);
+
+    newBtn.addEventListener("click", async () => {
+      const status = newBtn.dataset.status;
+      const updatedAttending = await sendRSVP(event._id, status);
+
+      if (updatedAttending !== null) {
+        // Update the local event object
+        event.attending = updatedAttending;
+
+        // Also update the event in the global events array
+        const idx = events.findIndex(e => e._id === event._id);
+        if (idx !== -1) {
+          events[idx].attending = updatedAttending;
+        }
+
+        renderRSVP(event);
+      }
+    });
+  });
+
+  // Delete button (only for event creator)
   const deleteBtn = document.getElementById("delete-event-btn");
   if (currentUser && currentUser.email === event.createdBy) {
-    document.getElementById("delete-event-btn").style.display = 'block';
+    deleteBtn.style.display = "block";
     deleteBtn.onclick = async () => {
       await deleteEvent(event._id);
       await fetchEvents();
       generateCalendar();
       modal.classList.add("hidden");
-
     };
   } else {
-    document.getElementById("delete-event-btn").style.display = 'none';
+    deleteBtn.style.display = "none";
     deleteBtn.onclick = null;
   }
 
   modal.classList.remove("hidden");
 };
 
+/**
+ * Delete an event
+ */
 const deleteEvent = async (eventId) => {
   try {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -232,23 +411,33 @@ const init = async () => {
   const closeModalBtn = document.getElementById("close-modal");
   const eventForm = document.getElementById("event-form");
   const newEventBtn = document.querySelector(".calendar-actions .btn-primary");
-  const filterBtn = document.querySelector(".calendar-actions .btn-outline");
+  const filterSelect = document.getElementById("category-filter");
 
-  // Load events and render calendar
+  // Load events, populate filter, render calendar
   await fetchEvents();
+  populateCategoryFilter();
   generateCalendar();
 
   // Navigation
   if (prevBtn) prevBtn.addEventListener("click", goToPrevMonth);
   if (nextBtn) nextBtn.addEventListener("click", goToNextMonth);
 
-  // Close modal
+  // Category filter
+  if (filterSelect) {
+    filterSelect.addEventListener("change", (e) => {
+      activeFilter = e.target.value;
+      generateCalendar();
+    });
+  }
+
+  // Close add-event modal
   if (closeModalBtn) {
     closeModalBtn.addEventListener("click", () => {
       modal.classList.add("hidden");
     });
   }
 
+  // Close view-event modal
   const viewModal = document.getElementById("view-event-modal");
   const closeViewBtn = document.getElementById("close-view-modal");
   if (closeViewBtn) {
@@ -257,7 +446,15 @@ const init = async () => {
     });
   }
 
-  // Modal form submission
+  // Close view modal by clicking overlay
+  const viewOverlay = document.getElementById("view-modal-overlay");
+  if (viewOverlay) {
+    viewOverlay.addEventListener("click", () => {
+      viewModal.classList.add("hidden");
+    });
+  }
+
+  // Modal form submission (create event)
   if (eventForm) {
     eventForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -288,8 +485,9 @@ const init = async () => {
           form.reset();
           modal.classList.add("hidden");
 
-          // Refresh events and calendar
+          // Refresh events, rebuild filter, redraw calendar
           await fetchEvents();
+          populateCategoryFilter();
           generateCalendar();
         } else {
           alert("Failed to save event.");
@@ -306,13 +504,6 @@ const init = async () => {
     newEventBtn.addEventListener("click", () => {
       eventForm.reset();
       modal.classList.remove("hidden");
-    });
-  }
-
-  // Filter button placeholder
-  if (filterBtn) {
-    filterBtn.addEventListener("click", () => {
-      alert("Filter events\n\n(Coming soon with backend integration)");
     });
   }
 };
