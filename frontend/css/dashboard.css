@@ -98,9 +98,95 @@
   background-color: #f1f3f4;
 }
 
+/* ================================
+   Calendar Actions (consistent sizing)
+   ================================ */
 .calendar-actions {
   display: flex;
   gap: 0.5rem;
+  align-items: center;
+}
+
+.calendar-actions .btn {
+  height: 40px;
+  padding: 0 1rem;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+/* ================================
+   View Toggle (All Events / My Calendar)
+   ================================ */
+.view-toggle {
+  display: flex;
+  border: 2px solid #dadce0;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 40px;
+}
+
+.toggle-btn {
+  padding: 0 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  background-color: #fff;
+  color: #5f6368;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.toggle-btn:first-child {
+  border-right: 1px solid #dadce0;
+}
+
+.toggle-btn:hover {
+  background-color: #f1f3f4;
+}
+
+.toggle-btn.active {
+  background-color: #4f46e5;
+  color: #fff;
+}
+
+/* ================================
+   Filter Dropdown
+   ================================ */
+.filter-wrapper {
+  position: relative;
+  height: 40px;
+}
+
+.filter-select {
+  height: 40px;
+  padding: 0 2rem 0 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 2px solid #4f46e5;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #4f46e5;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234f46e5' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.filter-select:hover {
+  background-color: #4f46e5;
+  color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+}
+
+.filter-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
 }
 
 /* ================================
@@ -186,9 +272,6 @@
 }
 
 /* ================================
-   Events Container (for future use)
-   ================================ */
-/* ================================
    Events Styling
    ================================ */
 .day-events {
@@ -198,7 +281,6 @@
   gap: 4px;
 }
 
-/* Individual calendar event */
 .calendar-event {
   font-size: 0.75rem;
   padding: 4px 6px;
@@ -213,7 +295,6 @@
   font-weight: 500;
 }
 
-/* Hover effect */
 .calendar-event:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -221,12 +302,21 @@
 }
 
 .my-event {
-  background: linear-gradient(135deg, #dc2626, #ef4444); /* red gradient */
+  background: linear-gradient(135deg, #dc2626, #ef4444);
   color: #ffffff;
 }
 
 .my-event:hover {
   box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
+}
+
+.shared-event {
+  background: linear-gradient(135deg, #0891b2, #06b6d4);
+  color: #ffffff;
+}
+
+.shared-event:hover {
+  box-shadow: 0 4px 10px rgba(8, 145, 178, 0.35);
 }
 
 /* ================================
@@ -239,7 +329,9 @@
   font-size: 0.9rem;
 }
 
-/* Event Modal */
+/* ================================
+   Modal
+   ================================ */
 .modal {
   position: fixed;
   top: 0;
@@ -267,7 +359,6 @@
   backdrop-filter: blur(2px);
 }
 
-/* Modal content */
 .modal-content {
   position: relative;
   background-color: #fff;
@@ -275,7 +366,7 @@
   width: 90%;
   max-width: 500px;
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   z-index: 10;
   animation: slideIn 0.3s ease;
 }
@@ -285,7 +376,9 @@
   to { transform: translateY(0); opacity: 1; }
 }
 
-/* Form styling */
+/* ================================
+   Form Styling
+   ================================ */
 form {
   display: flex;
   flex-direction: column;
@@ -317,7 +410,7 @@ input, textarea {
 }
 
 input:focus, textarea:focus {
-  border-color: #4f46e5; /* Indigo */
+  border-color: #4f46e5;
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
   outline: none;
 }
@@ -327,7 +420,9 @@ textarea {
   min-height: 80px;
 }
 
-/* Buttons */
+/* ================================
+   Buttons
+   ================================ */
 .modal-buttons {
   display: flex;
   justify-content: flex-end;
@@ -365,10 +460,146 @@ textarea {
   color: #fff;
 }
 
-@media (max-width: 480px) {
-  .form-row {
-    flex-direction: column;
-  }
+.btn-danger {
+  background-color: #dc2626;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-danger:hover {
+  background-color: #b91c1c;
+}
+
+/* ================================
+   RSVP Section
+   ================================ */
+.rsvp-section {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.rsvp-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3c4043;
+  margin: 0 0 0.75rem 0;
+}
+
+.rsvp-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.rsvp-btn {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 2px solid #dadce0;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #5f6368;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rsvp-btn:hover {
+  border-color: #4f46e5;
+  color: #4f46e5;
+}
+
+.rsvp-btn.active-going {
+  background-color: #16a34a;
+  border-color: #16a34a;
+  color: #fff;
+}
+
+.rsvp-btn.active-maybe {
+  background-color: #f59e0b;
+  border-color: #f59e0b;
+  color: #fff;
+}
+
+.rsvp-btn.active-not-going {
+  background-color: #6b7280;
+  border-color: #6b7280;
+  color: #fff;
+}
+
+/* ================================
+   RSVP Counts & Attendee Lists
+   ================================ */
+.rsvp-counts {
+  font-size: 0.85rem;
+  color: #5f6368;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.attendee-lists {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.attendee-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.attendee-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.going-label {
+  color: #16a34a;
+}
+
+.maybe-label {
+  color: #f59e0b;
+}
+
+.attendee-names {
+  font-size: 0.85rem;
+  color: #3c4043;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ================================
+   Checkbox Group (Enable RSVP)
+   ================================ */
+.checkbox-group {
+  flex-direction: row;
+  align-items: center;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #4f46e5;
+  cursor: pointer;
 }
 
 /* ================================
@@ -405,6 +636,10 @@ textarea {
 }
 
 @media (max-width: 480px) {
+  .form-row {
+    flex-direction: column;
+  }
+
   .day-header {
     font-size: 0.6rem;
   }
@@ -412,454 +647,4 @@ textarea {
   .calendar-day {
     min-height: 50px;
   }
-}
-/* ================================
-   Filter Dropdown
-   ================================ */
-.filter-wrapper {
-  position: relative;
-}
-
-.filter-select {
-  padding: 0.6rem 2rem 0.6rem 1rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  border: 2px solid #4f46e5;
-  border-radius: 8px;
-  background-color: #fff;
-  color: #4f46e5;
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234f46e5' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.filter-select:hover {
-  background-color: #4f46e5;
-  color: #fff;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-}
-
-.filter-select:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
-}
-
-/* ================================
-   RSVP Section
-   ================================ */
-.rsvp-section {
-  margin-top: 1.25rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid #e5e7eb;
-}
-
-.rsvp-heading {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #3c4043;
-  margin: 0 0 0.75rem 0;
-}
-
-.rsvp-buttons {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.rsvp-btn {
-  flex: 1;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border: 2px solid #dadce0;
-  border-radius: 8px;
-  background-color: #fff;
-  color: #5f6368;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.rsvp-btn:hover {
-  border-color: #4f46e5;
-  color: #4f46e5;
-}
-
-/* Active states for each RSVP status */
-.rsvp-btn.active-going {
-  background-color: #16a34a;
-  border-color: #16a34a;
-  color: #fff;
-}
-
-.rsvp-btn.active-maybe {
-  background-color: #f59e0b;
-  border-color: #f59e0b;
-  color: #fff;
-}
-
-.rsvp-btn.active-not-going {
-  background-color: #6b7280;
-  border-color: #6b7280;
-  color: #fff;
-}
-
-/* ================================
-   RSVP Counts & Attendee Lists
-   ================================ */
-.rsvp-counts {
-  font-size: 0.85rem;
-  color: #5f6368;
-  margin-bottom: 0.75rem;
-  font-weight: 500;
-}
-
-.attendee-lists {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.attendee-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.attendee-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-.going-label {
-  color: #16a34a;
-}
-
-.maybe-label {
-  color: #f59e0b;
-}
-
-.attendee-names {
-  font-size: 0.85rem;
-  color: #3c4043;
-  margin: 0;
-  line-height: 1.4;
-}
-
-/* ================================
-   Danger Button (Delete)
-   ================================ */
-.btn-danger {
-  background-color: #dc2626;
-  color: #fff;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.btn-danger:hover {
-  background-color: #b91c1c;
-}
-
-/* ================================
-   View Toggle (All Events / My Calendar)
-   ================================ */
-.view-toggle {
-  display: flex;
-  border: 2px solid #dadce0;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.toggle-btn {
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border: none;
-  background-color: #fff;
-  color: #5f6368;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.toggle-btn:first-child {
-  border-right: 1px solid #dadce0;
-}
-
-.toggle-btn:hover {
-  background-color: #f1f3f4;
-}
-
-.toggle-btn.active {
-  background-color: #4f46e5;
-  color: #fff;
-}
-
-/* ================================
-   Shared Event Styling (on calendar)
-   ================================ */
-.shared-event {
-  background: linear-gradient(135deg, #0891b2, #06b6d4);
-  color: #ffffff;
-}
-
-.shared-event:hover {
-  box-shadow: 0 4px 10px rgba(8, 145, 178, 0.35);
-}
-
-/* ================================
-   Filter Dropdown
-   ================================ */
-.filter-wrapper {
-  position: relative;
-}
-
-.filter-select {
-  padding: 0.6rem 2rem 0.6rem 1rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  border: 2px solid #4f46e5;
-  border-radius: 8px;
-  background-color: #fff;
-  color: #4f46e5;
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234f46e5' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.filter-select:hover {
-  background-color: #4f46e5;
-  color: #fff;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-}
-
-.filter-select:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
-}
-
-/* ================================
-   RSVP Section
-   ================================ */
-.rsvp-section {
-  margin-top: 1.25rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid #e5e7eb;
-}
-
-.rsvp-heading {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #3c4043;
-  margin: 0 0 0.75rem 0;
-}
-
-.rsvp-buttons {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.rsvp-btn {
-  flex: 1;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border: 2px solid #dadce0;
-  border-radius: 8px;
-  background-color: #fff;
-  color: #5f6368;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.rsvp-btn:hover {
-  border-color: #4f46e5;
-  color: #4f46e5;
-}
-
-/* Active states for each RSVP status */
-.rsvp-btn.active-going {
-  background-color: #16a34a;
-  border-color: #16a34a;
-  color: #fff;
-}
-
-.rsvp-btn.active-maybe {
-  background-color: #f59e0b;
-  border-color: #f59e0b;
-  color: #fff;
-}
-
-.rsvp-btn.active-not-going {
-  background-color: #6b7280;
-  border-color: #6b7280;
-  color: #fff;
-}
-
-/* ================================
-   RSVP Counts & Attendee Lists
-   ================================ */
-.rsvp-counts {
-  font-size: 0.85rem;
-  color: #5f6368;
-  margin-bottom: 0.75rem;
-  font-weight: 500;
-}
-
-.attendee-lists {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.attendee-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.attendee-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-.going-label {
-  color: #16a34a;
-}
-
-.maybe-label {
-  color: #f59e0b;
-}
-
-.attendee-names {
-  font-size: 0.85rem;
-  color: #3c4043;
-  margin: 0;
-  line-height: 1.4;
-}
-
-/* ================================
-   Danger Button (Delete)
-   ================================ */
-.btn-danger {
-  background-color: #dc2626;
-  color: #fff;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.btn-danger:hover {
-  background-color: #b91c1c;
-}
-
-/* ================================
-   Share Calendar Modal
-   ================================ */
-.share-description {
-  font-size: 0.9rem;
-  color: #5f6368;
-  margin: 0 0 1rem 0;
-  line-height: 1.4;
-}
-
-.share-input-row {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
-}
-
-.share-input-row input {
-  flex: 1;
-}
-
-.share-status {
-  font-size: 0.85rem;
-  font-weight: 500;
-  margin: 0 0 1rem 0;
-}
-
-.share-success {
-  color: #16a34a;
-}
-
-.share-error {
-  color: #dc2626;
-}
-
-/* ================================
-   Shared With List
-   ================================ */
-.shared-list-container {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #e5e7eb;
-}
-
-.shared-list-container h3 {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #3c4043;
-  margin: 0 0 0.5rem 0;
-}
-
-.shared-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.shared-list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0.75rem;
-  background-color: #f8f9fa;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  color: #3c4043;
-}
-
-.btn-remove-share {
-  padding: 0.25rem 0.6rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  border: 1px solid #dc2626;
-  border-radius: 4px;
-  background-color: #fff;
-  color: #dc2626;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-remove-share:hover {
-  background-color: #dc2626;
-  color: #fff;
-}
-
-.shared-empty {
-  font-size: 0.85rem;
-  color: #5f6368;
-  margin: 0;
 }

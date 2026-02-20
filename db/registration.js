@@ -5,7 +5,6 @@ import { MongoClient } from "mongodb";
 export default function myMongoDB() {
     const me = {};
     const URI = process.env.MONGODB_URI || "mongodb://admin:devpass123@localhost:27017/?authSource=admin";
-    const DB_NAME = "registrationdb";
 
     const connect = async () => {
         const client = new MongoClient(URI);

@@ -56,7 +56,27 @@
         <button type="submit" class="btn btn-primary">Save Profile</button>
       </div>
     </form>
+
+    <!-- Share Calendar Section -->
+    <div class="share-section">
+      <h2 class="share-section-title">Share Calendar</h2>
+      <p class="share-section-description">Share your calendar with other users. They'll see your events when they switch to "My Calendar" on the dashboard.</p>
+
+      <div class="share-input-row">
+        <input type="email" id="share-email-input" placeholder="Enter user's email" />
+        <button type="button" class="btn btn-primary" id="share-submit-btn">Share</button>
+      </div>
+
+      <p class="share-status hidden" id="share-status"></p>
+
+      <div class="shared-list-container">
+        <h3>Shared With</h3>
+        <ul id="shared-list" class="shared-list"></ul>
+        <p class="shared-empty hidden" id="shared-empty">You haven't shared your calendar with anyone yet.</p>
+      </div>
+    </div>
   </main>
+
   <script type="module" src="js/profile.js"></script>
 </body>
 

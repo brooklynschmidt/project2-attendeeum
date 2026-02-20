@@ -189,3 +189,128 @@
     font-size: 1.5rem;
   }
 }
+
+.share-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e5e7eb;
+}
+
+.share-section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 0.5rem 0;
+}
+
+.share-section-description {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0 0 1.25rem 0;
+  line-height: 1.4;
+}
+
+.share-input-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.share-input-row input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.share-input-row input:focus {
+  border-color: #4f46e5;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+.share-input-row .btn {
+  white-space: nowrap;
+}
+
+.share-status {
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin: 0 0 1rem 0;
+}
+
+.share-status.hidden {
+  display: none;
+}
+
+.share-success {
+  color: #16a34a;
+}
+
+.share-error {
+  color: #dc2626;
+}
+
+/* ================================
+   Shared With List
+   ================================ */
+.shared-list-container {
+  margin-top: 1.25rem;
+}
+
+.shared-list-container h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 0.5rem 0;
+}
+
+.shared-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.shared-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.75rem;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.btn-remove-share {
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid #dc2626;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #dc2626;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-remove-share:hover {
+  background-color: #dc2626;
+  color: #fff;
+}
+
+.shared-empty {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+}
+
+.shared-empty.hidden {
+  display: none;
+}
