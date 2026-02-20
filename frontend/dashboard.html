@@ -31,12 +31,19 @@
         </div>
       </div>
       <div class="calendar-actions">
+        <!-- View Toggle -->
+        <div class="view-toggle">
+          <button type="button" class="toggle-btn active" id="toggle-all">All Events</button>
+          <button type="button" class="toggle-btn" id="toggle-mine">My Calendar</button>
+        </div>
+
         <button type="button" class="btn btn-primary">+ New Event</button>
+        <button type="button" class="btn btn-outline" id="share-calendar-btn">Share Calendar</button>
 
         <!-- Filter Dropdown -->
         <div class="filter-wrapper">
           <select id="category-filter" class="filter-select">
-            <option value="all">Filter</option>
+            <option value="all">All Categories</option>
           </select>
         </div>
       </div>
@@ -148,6 +155,33 @@
       <div class="modal-buttons">
         <button type="button" class="btn btn-outline" id="close-view-modal">Close</button>
         <button type="button" class="btn btn-danger hidden" id="delete-event-btn">Delete Event</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share Calendar Modal -->
+  <div class="modal hidden" id="share-modal">
+    <div class="modal-overlay" id="share-modal-overlay"></div>
+    <div class="modal-content">
+      <h2>Share My Calendar</h2>
+      <p class="share-description">Enter an email to share your calendar with another user. They'll see your events in their "My Calendar" view.</p>
+
+      <div class="share-input-row">
+        <input type="email" id="share-email-input" placeholder="Enter user's email" />
+        <button type="button" class="btn btn-primary" id="share-submit-btn">Share</button>
+      </div>
+
+      <p class="share-status hidden" id="share-status"></p>
+
+      <!-- List of people I've shared with -->
+      <div id="shared-list-container" class="shared-list-container">
+        <h3>Shared With</h3>
+        <ul id="shared-list" class="shared-list"></ul>
+        <p class="shared-empty hidden" id="shared-empty">You haven't shared your calendar with anyone yet.</p>
+      </div>
+
+      <div class="modal-buttons">
+        <button type="button" class="btn btn-outline" id="close-share-modal">Close</button>
       </div>
     </div>
   </div>

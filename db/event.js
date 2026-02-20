@@ -2,7 +2,8 @@ import { MongoClient, ObjectId } from "mongodb";
 
 export default function myMongoDB() {
     const me = {};
-    const URI = process.env.MONGODB_URI || "mongodb://admin:devpass123@localhost:27017/?authSource=admin";    const DB_NAME = "registrationdb";
+    const URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
+    const DB_NAME = "registrationdb";
 
     const connect = async () => {
         const client = new MongoClient(URI);
@@ -46,19 +47,27 @@ export default function myMongoDB() {
         }
     };
 
-      me.rsvpEvent = async (eventId, email, name, status) => {
+    // ================================
+    // RSVP: upsert a user's RSVP status on an event
+    // attending array entries: { email, name, status }
+    // status: "going" | "maybe" | "not_going"
+    // ================================
+    me.rsvpEvent = async (eventId, email, name, status) => {
         const { client, events } = await connect();
         try {
+            // Remove any existing RSVP from this user first
             await events.updateOne(
                 { _id: new ObjectId(eventId) },
                 { $pull: { attending: { email } } }
             );
 
+            // If "not_going", we just remove — don't add back
             if (status === "not_going") {
                 const updated = await events.findOne({ _id: new ObjectId(eventId) });
                 return { success: true, attending: updated.attending };
             }
 
+            // Push the new RSVP
             await events.updateOne(
                 { _id: new ObjectId(eventId) },
                 { $push: { attending: { email, name, status } } }
@@ -71,6 +80,18 @@ export default function myMongoDB() {
         }
     };
 
+    // ================================
+    // Get events for "My Calendar" view
+    // Returns events created by the user OR by users who shared with them
+    // ================================
+    me.getMyCalendarEvents = async (emails) => {
+        const { client, events } = await connect();
+        try {
+            return await events.find({ createdBy: { $in: emails } }).toArray();
+        } finally {
+            await client.close();
+        }
+    };
 
     return me;
 }
