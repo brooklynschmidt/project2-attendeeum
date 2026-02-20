@@ -61,6 +61,7 @@
 
   <!-- Add Event Modal -->
   <div class="modal hidden" id="event-modal">
+    <div class="modal-overlay"></div>
     <div class="modal-content">
       <h2>Add Event</h2>
       <form id="event-form">
@@ -74,9 +75,16 @@
           <input type="text" id="event-organization" name="organization" placeholder="Organization" required />
         </div>
 
-        <div class="form-group">
-          <label for="event-time">Time</label>
-          <input type="time" id="event-time" name="time" required />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="event-date">Date</label>
+            <input type="date" id="event-date" name="date" required />
+          </div>
+
+          <div class="form-group">
+            <label for="event-time">Time</label>
+            <input type="time" id="event-time" name="time" required />
+          </div>
         </div>
 
         <div class="form-group">
@@ -85,18 +93,13 @@
         </div>
 
         <div class="form-group">
-          <label for="event-date">Date</label>
-          <input type="date" id="event-date" name="date" required />
+          <label for="category">Category</label>
+          <input type="text" id="event-category" name="category" placeholder="Category" required />
         </div>
 
         <div class="form-group">
           <label for="event-description">Description</label>
           <textarea id="event-description" name="description" placeholder="Description"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="category">Category</label>
-          <input type="text" id="event-category" name="category" placeholder="category" required />
         </div>
 
         <div class="modal-buttons">
