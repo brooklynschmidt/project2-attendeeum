@@ -6,11 +6,29 @@
  * Handle sign out
  */
 const handleSignOut = () => {
-  // TODO: Clear session/auth token when backend is connected
   console.log("Signing out...");
+  localStorage.removeItem("currentUser");
 
-  // Redirect to home page
   window.location.href = "index.html";
+};
+
+const loadUserProfile = () => {
+  const storedUser = localStorage.getItem("currentUser");
+
+  if (storedUser === null) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  const user = JSON.parse(storedUser);
+
+  // Update header display
+  document.querySelector(".profile-display-name").textContent = user.name;
+  document.querySelector(".profile-email-display").textContent = user.email;
+
+  // Update form fields
+  document.getElementById("username").value = user.name;
+  document.getElementById("email").value = user.email;
 };
 
 /**
@@ -22,9 +40,7 @@ const init = () => {
   if (signOutBtn) {
     signOutBtn.addEventListener("click", handleSignOut);
   }
-
-  // TODO: Load user data from backend when connected
-  // For now, using placeholder data in HTML
+  loadUserProfile();
 };
 
 document.addEventListener("DOMContentLoaded", init);

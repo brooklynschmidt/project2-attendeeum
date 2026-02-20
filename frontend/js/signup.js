@@ -13,36 +13,39 @@ const validatePasswords = (password, confirmPassword) => {
   return true;
 };
 
-/**
- * Handle signup form submission
- * TODO: Connect to backend API
- */
 const handleSignup = async (event) => {
   event.preventDefault();
 
   const form = event.target;
-  const name = form.name.value;
-  const email = form.email.value;
+  const name = form.name.value.trim();
+  const email = form.email.value.trim();
   const password = form.password.value;
   const confirmPassword = form["confirm-password"].value;
 
-  // Validate passwords match
-  if (!validatePasswords(password, confirmPassword)) {
-    return;
+  if (!validatePasswords(password, confirmPassword)) return;
+
+  try {
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem("currentUser", JSON.stringify({
+        name: data.name, email: data.email,
+        description: data.description, organization: data.organization
+      }));
+      window.location.href = "dashboard.html";
+    } else {
+      alert("Failed to signup: Email taken.");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Server error during signup.");
   }
-
-  // TODO: Replace with actual API call
-  console.log("Signup attempt:", { name, email, password });
-
-  // Placeholder: will connect to backend later
-  // const response = await fetch('/api/auth/signup', {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify({ name, email, password })
-  // });
-
-  // Temporary redirect to dashboard
-  window.location.href = "dashboard.html";
 };
 
 /**

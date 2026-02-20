@@ -2,10 +2,6 @@
 // Login Page JavaScript
 // ================================
 
-/**
- * Handle login form submission
- * TODO: Connect to backend API
- */
 const handleLogin = async (event) => {
   event.preventDefault();
 
@@ -13,18 +9,28 @@ const handleLogin = async (event) => {
   const email = form.email.value;
   const password = form.password.value;
 
-  // TODO: Replace with actual API call
-  console.log("Login attempt:", { email, password });
+  try {
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-  // Placeholder: will connect to backend later
-  // const response = await fetch('/api/auth/login', {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify({ email, password })
-  // });
+    const data = await response.json();
 
-  // Temporary redirect to dashboard
-  window.location.href = "dashboard.html";
+    if (response.ok) {
+      localStorage.setItem("currentUser", JSON.stringify({
+        name: data.name,
+        email: data.email,
+        description: data.description,
+        organization: data.organization}));
+      window.location.href = "dashboard.html";
+    } else {
+      alert(data.message);
+    }
+  } catch (err) {
+    console.error("Error connecting to backend:", err);
+  }
 };
 
 /**

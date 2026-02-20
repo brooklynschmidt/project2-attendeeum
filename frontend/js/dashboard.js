@@ -18,6 +18,11 @@ const monthNames = [
 ];
 
 /**
+ * Global events array
+ */
+let events = [];
+
+/**
  * Get the number of days in a month
  */
 const getDaysInMonth = (year, month) => {
@@ -33,6 +38,21 @@ const getFirstDayOfMonth = (year, month) => {
   return day === 0 ? 6 : day - 1;
 };
 
+const fetchEvents = async () => {
+  try {
+    const res = await fetch("/api/events");  // <-- no email filter
+    if (res.ok) {
+      events = await res.json();
+    } else {
+      console.error("Failed to fetch events");
+      events = [];
+    }
+  } catch (err) {
+    console.error("Error fetching events:", err);
+    events = [];
+  }
+};
+
 /**
  * Generate calendar grid
  */
@@ -42,26 +62,19 @@ const generateCalendar = () => {
 
   if (!grid || !monthDisplay) return;
 
-  // Update month display
   monthDisplay.textContent = `${monthNames[currentMonth]} ${currentYear}`;
-
-  // Clear existing grid
   grid.innerHTML = "";
 
-  // Get calendar data
   const daysInMonth = getDaysInMonth(currentYear, currentMonth);
   const firstDay = getFirstDayOfMonth(currentYear, currentMonth);
   const daysInPrevMonth = getDaysInMonth(currentYear, currentMonth - 1);
 
-  // Today's date for highlighting
   const today = new Date();
   const isCurrentMonth = today.getFullYear() === currentYear && today.getMonth() === currentMonth;
   const todayDate = today.getDate();
 
-  // Total cells needed (5 rows x 7 days = 35)
   const totalCells = 35;
 
-  // Generate days
   for (let i = 0; i < totalCells; i++) {
     const dayElement = document.createElement("div");
     dayElement.classList.add("calendar-day");
@@ -69,34 +82,45 @@ const generateCalendar = () => {
     const dayNumber = document.createElement("span");
     dayNumber.classList.add("day-number");
 
-    // Events container for future use
     const eventsContainer = document.createElement("div");
     eventsContainer.classList.add("day-events");
 
     if (i < firstDay) {
-      // Previous month days
       const prevDate = daysInPrevMonth - firstDay + i + 1;
       dayNumber.textContent = prevDate;
       dayElement.classList.add("other-month");
     } else if (i >= firstDay + daysInMonth) {
-      // Next month days
       const nextDate = i - firstDay - daysInMonth + 1;
       dayNumber.textContent = nextDate;
       dayElement.classList.add("other-month");
     } else {
-      // Current month days
       const date = i - firstDay + 1;
       dayNumber.textContent = date;
 
-      // Highlight today
       if (isCurrentMonth && date === todayDate) {
         dayElement.classList.add("today");
       }
 
-      // Add click handler for adding events (placeholder)
       dayElement.addEventListener("click", () => {
         handleDayClick(date);
       });
+
+      // Render events for this day
+      const dayISO = new Date(currentYear, currentMonth, date).toISOString().split("T")[0];
+
+      events
+        .filter(ev => ev.date === dayISO)
+        .forEach(ev => {
+          const evEl = document.createElement("div");
+          evEl.classList.add("calendar-event");
+          evEl.textContent = ev.title;
+          evEl.addEventListener("click", (e) => {
+            e.stopPropagation();
+            openViewEventModal(ev);
+          });
+
+          eventsContainer.appendChild(evEl);
+        });
     }
 
     dayElement.appendChild(dayNumber);
@@ -106,16 +130,70 @@ const generateCalendar = () => {
 };
 
 /**
- * Handle day click (placeholder for adding events)
+ * Handle day click - open modal with correct date
  */
 const handleDayClick = (date) => {
-  // TODO: Open add event modal
-  console.log(`Clicked on ${monthNames[currentMonth]} ${date}, ${currentYear}`);
-  alert(`Add event for ${monthNames[currentMonth]} ${date}, ${currentYear}\n\n(Coming soon with backend integration)`);
+  const modal = document.getElementById("event-modal");
+  const dateInput = document.querySelector("#event-form input[name='date']");
+
+  const formattedDate = new Date(currentYear, currentMonth, date)
+    .toISOString()
+    .split("T")[0];
+
+  dateInput.value = formattedDate;
+  modal.classList.remove("hidden");
+};
+
+const openViewEventModal = (event) => {
+  const modal = document.getElementById("view-event-modal");
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  document.getElementById("view-event-title").textContent = event.title;
+  document.getElementById("view-event-organization").textContent = event.organization;
+  document.getElementById("view-event-date").textContent = event.date;
+  document.getElementById("view-event-time").textContent = event.time;
+  document.getElementById("view-event-location").textContent = event.location;
+  document.getElementById("view-event-description").textContent = event.description;
+
+  const deleteBtn = document.getElementById("delete-event-btn");
+  if (currentUser && currentUser.email === event.createdBy) {
+    deleteBtn.classList.remove("hidden");
+    deleteBtn.onclick = async () => {
+      await deleteEvent(event._id);
+      await fetchEvents();
+      generateCalendar();
+      modal.classList.add("hidden");
+
+    };
+  } else {
+    deleteBtn.classList.add("hidden");
+  }
+
+  modal.classList.remove("hidden");
+};
+
+const deleteEvent = async (eventId) => {
+  try {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    const res = await fetch(`/api/events/${eventId}`, {
+      method: "DELETE",
+      headers: {
+        "x-user-email": currentUser?.email || "",
+      },
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      console.error("Failed to delete event:", data.message);
+    }
+  } catch (err) {
+    console.error("Error deleting event:", err);
+  }
 };
 
 /**
- * Navigate to previous month
+ * Navigate months
  */
 const goToPrevMonth = () => {
   currentMonth--;
@@ -126,9 +204,6 @@ const goToPrevMonth = () => {
   generateCalendar();
 };
 
-/**
- * Navigate to next month
- */
 const goToNextMonth = () => {
   currentMonth++;
   if (currentMonth > 11) {
@@ -141,32 +216,89 @@ const goToNextMonth = () => {
 /**
  * Initialize dashboard
  */
-const init = () => {
-  // Generate initial calendar
-  generateCalendar();
-
-  // Add event listeners for navigation
+const init = async () => {
   const prevBtn = document.getElementById("prev-month");
   const nextBtn = document.getElementById("next-month");
-
-  if (prevBtn) {
-    prevBtn.addEventListener("click", goToPrevMonth);
-  }
-
-  if (nextBtn) {
-    nextBtn.addEventListener("click", goToNextMonth);
-  }
-
-  // New Event button (placeholder)
+  const modal = document.getElementById("event-modal");
+  const closeModalBtn = document.getElementById("close-modal");
+  const eventForm = document.getElementById("event-form");
   const newEventBtn = document.querySelector(".calendar-actions .btn-primary");
-  if (newEventBtn) {
-    newEventBtn.addEventListener("click", () => {
-      alert("Add new event\n\n(Coming soon with backend integration)");
+  const filterBtn = document.querySelector(".calendar-actions .btn-outline");
+
+  // Load events and render calendar
+  await fetchEvents();
+  generateCalendar();
+
+  // Navigation
+  if (prevBtn) prevBtn.addEventListener("click", goToPrevMonth);
+  if (nextBtn) nextBtn.addEventListener("click", goToNextMonth);
+
+  // Close modal
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener("click", () => {
+      modal.classList.add("hidden");
     });
   }
 
-  // Filter button (placeholder)
-  const filterBtn = document.querySelector(".calendar-actions .btn-outline");
+  const viewModal = document.getElementById("view-event-modal");
+  const closeViewBtn = document.getElementById("close-view-modal");
+  if (closeViewBtn) {
+    closeViewBtn.addEventListener("click", () => {
+      viewModal.classList.add("hidden");
+    });
+  }
+
+  // Modal form submission
+  if (eventForm) {
+    eventForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const form = e.target;
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      const eventData = {
+        title: form["title"].value,
+        organization: form["organization"].value,
+        time: form["time"].value,
+        location: form["location"].value,
+        date: form["date"].value,
+        description: form["description"].value,
+        createdBy: currentUser.email
+      };
+
+      try {
+        const res = await fetch("/api/events", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(eventData)
+        });
+
+        if (res.ok) {
+          alert("Event saved successfully!");
+          form.reset();
+          modal.classList.add("hidden");
+
+          // Refresh events and calendar
+          await fetchEvents();
+          generateCalendar();
+        } else {
+          alert("Failed to save event.");
+        }
+      } catch (err) {
+        console.error("Error submitting event:", err);
+        alert("Server error.");
+      }
+    });
+  }
+
+  // New Event button opens empty modal
+  if (newEventBtn) {
+    newEventBtn.addEventListener("click", () => {
+      eventForm.reset();
+      modal.classList.remove("hidden");
+    });
+  }
+
+  // Filter button placeholder
   if (filterBtn) {
     filterBtn.addEventListener("click", () => {
       alert("Filter events\n\n(Coming soon with backend integration)");
