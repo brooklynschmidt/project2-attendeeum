@@ -154,6 +154,7 @@ const openViewEventModal = (event) => {
   document.getElementById("view-event-time").textContent = event.time;
   document.getElementById("view-event-location").textContent = event.location;
   document.getElementById("view-event-description").textContent = event.description;
+  document.getElementById("view-event-category").textContent = event.category;
 
   const deleteBtn = document.getElementById("delete-event-btn");
   if (currentUser && currentUser.email === event.createdBy) {
@@ -262,7 +263,8 @@ const init = async () => {
         location: form["location"].value,
         date: form["date"].value,
         description: form["description"].value,
-        createdBy: currentUser.email
+        createdBy: currentUser.email,
+        category: form["category"].value
       };
 
       try {

@@ -6,7 +6,8 @@
         "location": "Fenway Hall",
         "date": "2026-02-28",
         "description": "Come join us to learn about Korean culture! Link in our instagram bio: @neukasa",
-        "createdBy": "alice@gmail.com"
+        "createdBy": "alice@gmail.com",
+        "category": "social"
     },
     {
         "title": "NUHacks",
@@ -15,6 +16,7 @@
         "location": "Shillman 310",
         "date": "2026-02-02",
         "description": "Best CTF to ever exist. Come by.",
-        "createdBy": "bob@gmail.com"
+        "createdBy": "bob@gmail.com",
+        "category": "academic"
     }
 ]
