@@ -188,21 +188,45 @@
 /* ================================
    Events Container (for future use)
    ================================ */
+/* ================================
+   Events Styling
+   ================================ */
 .day-events {
-  margin-top: 0.25rem;
+  margin-top: 0.35rem;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
-.event-item {
+/* Individual calendar event */
+.calendar-event {
   font-size: 0.75rem;
-  padding: 2px 4px;
-  border-radius: 3px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #fff;
+  font-weight: 500;
+}
+
+/* Hover effect */
+.calendar-event:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  opacity: 0.95;
+}
+
+.my-event {
+  background: linear-gradient(135deg, #dc2626, #ef4444); /* red gradient */
+  color: #ffffff;
+}
+
+.my-event:hover {
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
 }
 
 /* ================================

@@ -113,6 +113,12 @@ const generateCalendar = () => {
         .forEach(ev => {
           const evEl = document.createElement("div");
           evEl.classList.add("calendar-event");
+          const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+          if (currentUser && currentUser.email === ev.createdBy) {
+            evEl.classList.add("my-event");
+          }
+          
           evEl.textContent = ev.title;
           evEl.addEventListener("click", (e) => {
             e.stopPropagation();
