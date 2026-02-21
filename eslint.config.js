@@ -31,8 +31,6 @@ export default [
 
     rules: {
       // ESLint recommended rules
-      "endOfLine": "auto",
-
       ...js.configs.recommended.rules,
 
       indent: [
@@ -52,7 +50,7 @@ export default [
       "prettier/prettier": [
         "error",
         {
-          endOfLine: "lf",
+          endOfLine: "auto",
         },
       ],
     },

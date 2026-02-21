@@ -52,12 +52,15 @@ const saveProfile = async () => {
     const data = await res.json();
     alert(`Error: ${data.message || "Failed to update profile"}`);
   }
-  localStorage.setItem("currentUser", JSON.stringify({
-    name: currentUser.name,
-    email: currentUser.email,
-    description: description,
-    organization: organization
-  }));
+  localStorage.setItem(
+    "currentUser",
+    JSON.stringify({
+      name: currentUser.name,
+      email: currentUser.email,
+      description: description,
+      organization: organization,
+    }),
+  );
 };
 
 // ================================
@@ -74,8 +77,8 @@ const shareCalendar = async (targetEmail) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ownerEmail: currentUser.email,
-        targetEmail
-      })
+        targetEmail,
+      }),
     });
 
     const data = await res.json();
@@ -96,8 +99,8 @@ const unshareCalendar = async (targetEmail) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ownerEmail: currentUser.email,
-        targetEmail
-      })
+        targetEmail,
+      }),
     });
   } catch (err) {
     console.error("Error unsharing calendar:", err);
@@ -113,7 +116,9 @@ const loadSharedList = async () => {
   listEl.innerHTML = "";
 
   try {
-    const res = await fetch(`/api/profile/my-shares?email=${encodeURIComponent(currentUser.email)}`);
+    const res = await fetch(
+      `/api/profile/my-shares?email=${encodeURIComponent(currentUser.email)}`,
+    );
     if (!res.ok) return;
 
     const sharedEmails = await res.json();
@@ -125,7 +130,7 @@ const loadSharedList = async () => {
 
     emptyEl.classList.add("hidden");
 
-    sharedEmails.forEach(email => {
+    sharedEmails.forEach((email) => {
       const li = document.createElement("li");
       li.classList.add("shared-list-item");
 
@@ -160,10 +165,12 @@ const init = () => {
   }
   loadUserProfile();
 
-  document.getElementById("profile-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    await saveProfile();
-  });
+  document
+    .getElementById("profile-form")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+      await saveProfile();
+    });
 
   // ================================
   // Share Calendar

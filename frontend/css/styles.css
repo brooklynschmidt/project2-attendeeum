@@ -249,7 +249,8 @@ body {
 
 @media (max-width: 480px) {
   .nav-links {
-    display: none; /* Could add hamburger menu later */
+    display: none;
+    /* Could add hamburger menu later */
   }
 
   .hero-cta {

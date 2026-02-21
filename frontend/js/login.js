@@ -19,11 +19,15 @@ const handleLogin = async (event) => {
     const data = await response.json();
 
     if (response.ok) {
-      localStorage.setItem("currentUser", JSON.stringify({
-        name: data.name,
-        email: data.email,
-        description: data.description,
-        organization: data.organization}));
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify({
+          name: data.name,
+          email: data.email,
+          description: data.description,
+          organization: data.organization,
+        }),
+      );
       window.location.href = "dashboard.html";
     } else {
       alert(data.message);

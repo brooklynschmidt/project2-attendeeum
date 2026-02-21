@@ -13,8 +13,18 @@ let currentMonth = currentDate.getMonth();
  * Month names for display
  */
 const monthNames = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 /**
@@ -51,7 +61,7 @@ const fetchMyEvents = async () => {
     const res = await fetch("/api/events");
     if (res.ok) {
       const allEvents = await res.json();
-      events = allEvents.filter(ev => ev.createdBy === currentUser.email);
+      events = allEvents.filter((ev) => ev.createdBy === currentUser.email);
     } else {
       console.error("Failed to fetch events");
       events = [];
@@ -70,7 +80,9 @@ const fetchSharedEvents = async () => {
   if (!currentUser) return;
 
   try {
-    const res = await fetch(`/api/events/my-calendar?email=${encodeURIComponent(currentUser.email)}`);
+    const res = await fetch(
+      `/api/events/my-calendar?email=${encodeURIComponent(currentUser.email)}`,
+    );
     if (res.ok) {
       events = await res.json();
     } else {
@@ -101,7 +113,7 @@ const refreshCalendar = async () => {
  */
 const getFilteredEvents = () => {
   if (activeFilter === "all") return events;
-  return events.filter(ev => ev.category === activeFilter);
+  return events.filter((ev) => ev.category === activeFilter);
 };
 
 /**
@@ -111,15 +123,15 @@ const populateCategoryFilter = () => {
   const filterSelect = document.getElementById("category-filter");
   if (!filterSelect) return;
 
-  const categories = [...new Set(
-    events
-      .map(ev => ev.category)
-      .filter(cat => cat && cat.trim() !== "")
-  )].sort();
+  const categories = [
+    ...new Set(
+      events.map((ev) => ev.category).filter((cat) => cat && cat.trim() !== ""),
+    ),
+  ].sort();
 
   filterSelect.innerHTML = '<option value="all">Filter</option>';
 
-  categories.forEach(cat => {
+  categories.forEach((cat) => {
     const option = document.createElement("option");
     option.value = cat;
     option.textContent = cat;
@@ -151,7 +163,8 @@ const generateCalendar = () => {
   const daysInPrevMonth = getDaysInMonth(currentYear, currentMonth - 1);
 
   const today = new Date();
-  const isCurrentMonth = today.getFullYear() === currentYear && today.getMonth() === currentMonth;
+  const isCurrentMonth =
+    today.getFullYear() === currentYear && today.getMonth() === currentMonth;
   const todayDate = today.getDate();
 
   const totalCells = 35;
@@ -187,11 +200,13 @@ const generateCalendar = () => {
         handleDayClick(date);
       });
 
-      const dayISO = new Date(currentYear, currentMonth, date).toISOString().split("T")[0];
+      const dayISO = new Date(currentYear, currentMonth, date)
+        .toISOString()
+        .split("T")[0];
 
       filteredEvents
-        .filter(ev => ev.date === dayISO)
-        .forEach(ev => {
+        .filter((ev) => ev.date === dayISO)
+        .forEach((ev) => {
           const evEl = document.createElement("div");
           evEl.classList.add("calendar-event");
           const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -251,8 +266,8 @@ const sendRSVP = async (eventId, status) => {
       body: JSON.stringify({
         email: currentUser.email,
         name: currentUser.name || "Anonymous",
-        status
-      })
+        status,
+      }),
     });
 
     if (res.ok) {
@@ -273,12 +288,12 @@ const renderRSVP = (event) => {
   const attending = event.attending || [];
 
   const myRSVP = currentUser
-    ? attending.find(a => a.email === currentUser.email)
+    ? attending.find((a) => a.email === currentUser.email)
     : null;
   const myStatus = myRSVP ? myRSVP.status : null;
 
   const rsvpButtons = document.querySelectorAll(".rsvp-btn");
-  rsvpButtons.forEach(btn => {
+  rsvpButtons.forEach((btn) => {
     btn.classList.remove("active-going", "active-maybe", "active-not-going");
     const btnStatus = btn.dataset.status;
     if (btnStatus === myStatus) {
@@ -286,8 +301,8 @@ const renderRSVP = (event) => {
     }
   });
 
-  const goingList = attending.filter(a => a.status === "going");
-  const maybeList = attending.filter(a => a.status === "maybe");
+  const goingList = attending.filter((a) => a.status === "going");
+  const maybeList = attending.filter((a) => a.status === "maybe");
 
   const countsEl = document.getElementById("rsvp-counts");
   const parts = [];
@@ -304,7 +319,7 @@ const renderRSVP = (event) => {
     goingSection.innerHTML = `<span class="attendee-label going-label">Going</span>`;
     const names = document.createElement("p");
     names.classList.add("attendee-names");
-    names.textContent = goingList.map(a => a.name).join(", ");
+    names.textContent = goingList.map((a) => a.name).join(", ");
     goingSection.appendChild(names);
     listsEl.appendChild(goingSection);
   }
@@ -315,7 +330,7 @@ const renderRSVP = (event) => {
     maybeSection.innerHTML = `<span class="attendee-label maybe-label">Maybe</span>`;
     const names = document.createElement("p");
     names.classList.add("attendee-names");
-    names.textContent = maybeList.map(a => a.name).join(", ");
+    names.textContent = maybeList.map((a) => a.name).join(", ");
     maybeSection.appendChild(names);
     listsEl.appendChild(maybeSection);
   }
@@ -326,11 +341,13 @@ const openViewEventModal = (event) => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   document.getElementById("view-event-title").textContent = event.title;
-  document.getElementById("view-event-organization").textContent = event.organization;
+  document.getElementById("view-event-organization").textContent =
+    event.organization;
   document.getElementById("view-event-date").textContent = event.date;
   document.getElementById("view-event-time").textContent = event.time;
   document.getElementById("view-event-location").textContent = event.location;
-  document.getElementById("view-event-description").textContent = event.description;
+  document.getElementById("view-event-description").textContent =
+    event.description;
   document.getElementById("view-event-category").textContent = event.category;
 
   // Show or hide RSVP section
@@ -340,7 +357,7 @@ const openViewEventModal = (event) => {
     renderRSVP(event);
 
     const rsvpButtons = document.querySelectorAll(".rsvp-btn");
-    rsvpButtons.forEach(btn => {
+    rsvpButtons.forEach((btn) => {
       const newBtn = btn.cloneNode(true);
       btn.parentNode.replaceChild(newBtn, btn);
 
@@ -351,7 +368,7 @@ const openViewEventModal = (event) => {
         if (updatedAttending !== null) {
           event.attending = updatedAttending;
 
-          const idx = events.findIndex(e => e._id === event._id);
+          const idx = events.findIndex((e) => e._id === event._id);
           if (idx !== -1) {
             events[idx].attending = updatedAttending;
           }
@@ -520,14 +537,14 @@ const init = async () => {
         createdBy: currentUser.email,
         category: form["category"].value,
         attending: [],
-        rsvpEnabled: form["rsvpEnabled"].checked
+        rsvpEnabled: form["rsvpEnabled"].checked,
       };
 
       try {
         const res = await fetch("/api/events", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(eventData)
+          body: JSON.stringify(eventData),
         });
 
         if (res.ok) {

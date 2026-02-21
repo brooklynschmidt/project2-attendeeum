@@ -34,10 +34,15 @@ const handleSignup = async (event) => {
     const data = await res.json();
 
     if (res.ok) {
-      localStorage.setItem("currentUser", JSON.stringify({
-        name: data.name, email: data.email,
-        description: data.description, organization: data.organization
-      }));
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify({
+          name: data.name,
+          email: data.email,
+          description: data.description,
+          organization: data.organization,
+        }),
+      );
       window.location.href = "dashboard.html";
     } else {
       alert("Failed to signup: Email taken.");
