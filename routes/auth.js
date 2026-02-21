@@ -20,7 +20,6 @@ router.post("/login", async (req, res) => {
     // Use getUser here
     const user = await db.getUser({ email: email });
     return res.json(user);
-
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server error" });
@@ -30,19 +29,18 @@ router.post("/login", async (req, res) => {
 router.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
 
-  // Validate input
   if (!name || !email || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
+
+  const organization = "";
+  const description = "";
 
   try {
     const emailTaken = await db.isEmailTaken(email);
     if (emailTaken) {
       return res.status(409).json({ message: "Email already registered" });
     }
-
-    const organization = "";
-    const description = "";
 
     const user = {
       name,
@@ -53,10 +51,7 @@ router.post("/signup", async (req, res) => {
     };
 
     const userId = await db.createUser(user);
-    return res.status(201).json({ message: "Signup successful", userId });
 
-  } catch (err) {
-    console.error(err);
     return res.status(201).json({
       message: "Signup successful",
       user: {
@@ -64,8 +59,13 @@ router.post("/signup", async (req, res) => {
         name,
         email,
         organization,
-        description
-      }
+        description,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      message: "Server error during signup",
     });
   }
 });

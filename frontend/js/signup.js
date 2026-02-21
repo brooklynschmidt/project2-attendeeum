@@ -18,6 +18,7 @@ const handleSignup = async (event) => {
 
   const form = event.target;
   const name = form.name.value.trim();
+  console.log(name);
   const email = form.email.value.trim();
   const password = form.password.value;
   const confirmPassword = form["confirm-password"].value;
@@ -31,16 +32,14 @@ const handleSignup = async (event) => {
       body: JSON.stringify({ name, email, password }),
     });
 
-    const data = await res.json();
-
     if (res.ok) {
       localStorage.setItem(
         "currentUser",
         JSON.stringify({
-          name: data.name,
-          email: data.email,
-          description: data.description,
-          organization: data.organization,
+          name: form.name.value.trim(),
+          email: form.email.value.trim(),
+          description: "",
+          organization: "",
         }),
       );
       window.location.href = "dashboard.html";
@@ -51,6 +50,8 @@ const handleSignup = async (event) => {
     console.error(err);
     alert("Server error during signup.");
   }
+
+  console.log(localStorage.getItem("currentUser"));
 };
 
 /**
