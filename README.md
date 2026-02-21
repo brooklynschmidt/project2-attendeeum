@@ -27,7 +27,7 @@ JavaScript, CSS3, HTML5, ES6 Modules, Bootstrap5, MongoDB, Express, NodeJS, and 
 1. `git clone https://github.com/brooklynschmidt/project2-attendeeum`
 2. `cd project1`
 3. `npm install`
-4. `docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest`
+4. `docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest` Due to this step, you may need to change the MongoDB string that is used to connect to the DB.
 5. `npm start`
 
 # Instructions on How To Use The Application
