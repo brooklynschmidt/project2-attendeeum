@@ -1,40 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product - Attendeeum</title>
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/product.css" />
-</head>
-
-<body>
-  <!-- Sticky Navigation -->
-  <nav class="navbar">
-    <a href="index.html" class="nav-logo">A</a>
-    <ul class="nav-links">
-      <li><a href="product.html">Product</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-    <div class="nav-auth">
-      <button type="button" class="btn btn-outline">Login</button>
-      <button type="button" class="btn btn-primary">Sign Up</button>
-    </div>
-  </nav>
-
-  <main>
-    <!-- Section 1: Hero -->
-    <section class="product-hero">
-      <h1 class="product-title">The last calendar app you'll ever need</h1>
-      <div class="product-intro">
-        <h2 class="product-name">Attendeum</h2>
-        <p class="product-description">
-          Attendeum is a web-application that allows users to post events
-          that they plan on attending or hosting to a calendar that their
-          friends can view and add to. Share events, track RSVPs, and never
-          miss out on plans with friends again.
-        </p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product - Attendeeum</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/product.css" />
+  </head>
+  <body>
+    <!-- Sticky Navigation -->
+    <nav class="navbar">
+      <a href="index.html" class="nav-logo">A</a>
+      <ul class="nav-links">
+        <li><a href="product.html">Product</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <div class="nav-auth">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="signup.html" class="btn btn-primary">Sign Up</a>
       </div>
     </section>
 
@@ -55,11 +38,15 @@
       </div>
     </section>
 
-    <!-- Section 3: Share Calendar (Text LEFT, Demo RIGHT) -->
-    <section class="feature-section feature-section-alt fade-in">
-      <div class="feature-demo">
-        <div class="demo-placeholder">
-          <span>Demo</span>
+      <!-- Section 2: Add Events (Demo LEFT, Text RIGHT) -->
+      <section class="feature-section fade-in">
+        <div class="feature-demo">
+          <div class="demo-placeholder">
+            <video class="demo-video" autoplay loop muted playsinline>
+              <source src="images/Addevent.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
         </div>
       </div>
       <div class="feature-content">
@@ -72,11 +59,14 @@
       </div>
     </section>
 
-    <!-- Section 4: RSVP (Demo LEFT, Text RIGHT) -->
-    <section class="feature-section fade-in">
-      <div class="feature-demo">
-        <div class="demo-placeholder">
-          <span>Demo</span>
+     <!-- Section 3: Share Calendar (Text LEFT, Demo RIGHT) -->
+      <section class="feature-section feature-section-alt fade-in">
+        <div class="feature-demo">
+          <div class="demo-placeholder">
+            <video class="demo-video" autoplay loop muted playsinline>
+<source src="images/sharecal.mp4" type="video/mp4" />            
+            </video>
+          </div>
         </div>
       </div>
       <div class="feature-content">
@@ -88,11 +78,15 @@
       </div>
     </section>
 
-    <!-- Section 5: G-Cal Sync (Text LEFT, Demo RIGHT) -->
-    <section class="feature-section feature-section-alt fade-in">
-      <div class="feature-demo">
-        <div class="demo-placeholder">
-          <span>Demo</span>
+     <!-- Section 4: RSVP (Demo LEFT, Text RIGHT) -->
+      <section class="feature-section fade-in">
+        <div class="feature-demo">
+          <div class="demo-placeholder">
+            <video class="demo-video" autoplay loop muted playsinline>
+              <source src="images/RSVP.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
         </div>
       </div>
       <div class="feature-content">
@@ -105,7 +99,26 @@
     </section>
   </main>
 
-  <script type="module" src="js/product.js"></script>
-</body>
+      <!-- Section 5: Filter Events (Text LEFT, Demo RIGHT) -->
+      <section class="feature-section feature-section-alt fade-in">
+        <div class="feature-demo">
+          <div class="demo-placeholder">
+            <video class="demo-video" autoplay loop muted playsinline>
+              <source src="images/filter.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <div class="feature-content">
+          <h3 class="feature-title">Filter Events</h3>
+          <p class="feature-description">
+            Quickly find the events you care about. Filter by category to 
+            cut through the noise and see only what matters to you.
+          </p>
+        </div>
+      </section>
+
+   
+    </main>
 
 </html>
