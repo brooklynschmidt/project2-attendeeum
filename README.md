@@ -35,12 +35,40 @@ JavaScript, CSS3, HTML5, ES6 Modules, Bootstrap5, MongoDB, Express, NodeJS, and 
 5. Press on any square in the calendar or press "New Event". 
 6. Create a new event by filling out the information.
 7. Click on your created event and delete it if you don't like it.
-8. Click on the image in the top right to get to your profile.
-9. Fill out your profile and click "Save Profile"
-10. Share your calendar with someone using the share calendar feature.
-11. Sign out when you are done using it.
+8. Filter for an event using the Filter button
+9. Click on the image in the top right to get to your profile.
+10. Fill out your profile and click "Save Profile"
+11. Share your calendar with someone using the share calendar feature.
+12. Sign out when you are done using it.
 
 # Screenshots
+**Homepage**
+![main home page picture1](https://github.com/brooklynschmidt/project2-attendeeum/blob/184070bc82e6de66523bd43534ec9de76ed0a139/images/homepage1.png)
+![main home page picture2](https://github.com/brooklynschmidt/project2-attendeeum/blob/184070bc82e6de66523bd43534ec9de76ed0a139/images/homepage2.png)
+
+**Product Page**
+![product page picture](https://github.com/brooklynschmidt/project2-attendeeum/blob/184070bc82e6de66523bd43534ec9de76ed0a139/images/productpage.png)
+
+**Founders Page**
+![founders page picture](https://github.com/brooklynschmidt/project2-attendeeum/blob/184070bc82e6de66523bd43534ec9de76ed0a139/images/founderpage.png)
+
+**Login Page**
+![login page picture](https://github.com/brooklynschmidt/project2-attendeeum/blob/184070bc82e6de66523bd43534ec9de76ed0a139/images/loginpage.png)
+
+**Sign Up Page**
+![sign up page](https://github.com/brooklynschmidt/project2-attendeeum/blob/184070bc82e6de66523bd43534ec9de76ed0a139/images/createaccount.png)
+
+**Dashboard**
+![dashboard picture](https://github.com/brooklynschmidt/project2-attendeeum/blob/184070bc82e6de66523bd43534ec9de76ed0a139/images/dashboard.png)
+
+**Adding an Event**
+![add an event](https://github.com/brooklynschmidt/project2-attendeeum/blob/184070bc82e6de66523bd43534ec9de76ed0a139/images/addevent.png)
+
+**Viewing an Event / Deleting an Event**
+![view/delete picture](https://github.com/brooklynschmidt/project2-attendeeum/blob/184070bc82e6de66523bd43534ec9de76ed0a139/images/viewevent.png)
+
+**Profile**
+![profile page picture](https://github.com/brooklynschmidt/project2-attendeeum/blob/184070bc82e6de66523bd43534ec9de76ed0a139/images/profile.png)
 
 
 # AI Generated Content & Prompts
