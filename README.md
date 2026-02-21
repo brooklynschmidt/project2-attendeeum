@@ -8,11 +8,11 @@ The goal of actual application is to serve as a group-shared calendar that peopl
 
 **Author: Isabel Yeow and Brooklyn Schmidt**
 
-**Homepage:**
+**Web Page:**
 [Link to Homepage](...)
 
 **Demo:**
-[Link to Demo](...)
+[Link to Demo](https://drive.google.com/file/d/19QXpLSnf99Sf5eja8C1T2qa93J7iegOR/view?usp=sharing)
 
 **Slides**
 [Link to Slides](https://docs.google.com/presentation/d/1NPlXAvmg9avr8aJ7BkH4Fu3BFgpafuyLlkCFY2GmHLQ/edit?usp=sharing)
@@ -43,6 +43,7 @@ JavaScript, CSS3, HTML5, ES6 Modules, Bootstrap5, MongoDB, Express, NodeJS, and 
 10. Fill out your profile and click "Save Profile"
 11. Share your calendar with someone using the share calendar feature.
 12. Sign out when you are done using it.
+13. If someone shares their calendar with you or someone puts out a public event using the RSVP feature, it will show up on your calendar. RSVP events will show up in red, shared calendars will show up by ticking the Shared calendar on the top right. 
 
 # Screenshots
 **Homepage**

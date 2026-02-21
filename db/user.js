@@ -3,7 +3,9 @@ import { MongoClient } from "mongodb";
 
 export default function myMongoDB() {
   const me = {};
-  const URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
+  const URI =
+    process.env.MONGODB_URI ||
+    "mongodb+srv://schmidtbro_db_user:pzneOEgPsXvATsI8@webdevproject2.f8gwnx6.mongodb.net/?appName=WebDevProject2";
   const DB_NAME = "registrationdb";
 
   const connect = async () => {
