@@ -9,7 +9,7 @@ The goal of actual application is to serve as a group-shared calendar that peopl
 **Author: Isabel Yeow and Brooklyn Schmidt**
 
 **Web Page:**
-[Link to Homepage](...)
+[Link to Homepage](https://project2-attendeeum.onrender.com/index.html)
 
 **Demo:**
 [Link to Demo](https://drive.google.com/file/d/19QXpLSnf99Sf5eja8C1T2qa93J7iegOR/view?usp=sharing)
