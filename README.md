@@ -14,6 +14,9 @@ The goal of actual application is to serve as a group-shared calendar that peopl
 **Demo:**
 [Link to Demo](...)
 
+**Slides**
+[Link to Slides](https://docs.google.com/presentation/d/1NPlXAvmg9avr8aJ7BkH4Fu3BFgpafuyLlkCFY2GmHLQ/edit?usp=sharing)
+
 **Design Document:**
 [Design Document](https://docs.google.com/document/d/1DNqwvifbzov_-E_if4WwraZaz_k_8-bspwm66m2iKtA/edit?usp=sharing)
 
